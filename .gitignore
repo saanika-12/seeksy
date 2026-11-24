@@ -1,0 +1,40 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Virtual environments
+venv/
+.venv/
+env/
+
+# Environment variables
+.env
+
+# C++ compiled files
+*.exe
+*.o
+*.obj
+*.out
+*.dll
+*.so
+
+# Build folders
+build/
+engine/build/
+
+# IDE files
+.vscode/
+.idea/
+
+# Operating system files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.temp
