@@ -3,6 +3,7 @@
 
 #include <string>
 #include <vector>
+#include <stdexcept>
 
 // Holds everything an algorithm reports back after it runs.
 struct SchedulingResult {

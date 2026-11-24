@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <stdexcept>
 
 #include "FCFS.h"
 #include "SSTF.h"
@@ -15,8 +16,17 @@ int main()
     int diskSize = 200;
     int headPosition = 50;
 
-    vector<int> requests = {82, 170, 43, 140, 24, 16, 190};
-
+    vector<int> requests = {82, 170, 250, 140, 24, 16, 190};
+try
+{
+    /* code */
+}
+catch(const std::exception& e)
+{
+    std::cerr << e.what() << '\n';
+}
+try
+{
     FCFS fcfs(headPosition, diskSize, requests);
     SSTF sstf(headPosition, diskSize, requests);
     SCAN scan(headPosition, diskSize, requests);
@@ -43,6 +53,11 @@ int main()
 
     cout << "C-LOOK Movement: "
          << clook.run().totalHeadMovement << endl;
-
+}
+catch (const invalid_argument& error)
+{
+    cout << "\nValidation Successful!" << endl;
+    cout << "Error: " << error.what() << endl;
+}
     return 0;
 }

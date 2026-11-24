@@ -5,6 +5,24 @@
 DiskScheduler::DiskScheduler(int head, int size,
                              const std::vector<int>& requestList)
 {
+    if (size <= 0)
+    {
+        throw std::invalid_argument("Disk size must be greater than zero.");
+    }
+
+    if (head < 0 || head >= size)
+    {
+        throw std::invalid_argument("Invalid head position.");
+    }
+
+    for (int i = 0; i < requestList.size(); i++)
+    {
+        if (requestList[i] < 0 || requestList[i] >= size)
+        {
+            throw std::invalid_argument("Invalid disk request.");
+        }
+    }
+
     headPosition = head;
     diskSize = size;
     requests = requestList;
