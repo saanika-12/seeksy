@@ -1,16 +1,26 @@
 from flask import Flask, request, jsonify, render_template
 import subprocess
 import os
+import json
 
+# Find the main project folder
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+# Locate frontend folders
+FRONTEND_DIR = os.path.join(BASE_DIR, "frontend")
+
+# Configure Flask
 app = Flask(
     __name__,
-    template_folder="../frontend/templates",
-    static_folder="../frontend/static"
+    template_folder=os.path.join(FRONTEND_DIR, "templates"),
+    static_folder=os.path.join(FRONTEND_DIR, "static")
 )
 
-# Locate the C++ executable.
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-ENGINE_PATH = os.path.join(BASE_DIR, "engine", "seeksy_api.exe")
+# Choose the correct executable for the operating system
+if os.name == "nt":
+    ENGINE_PATH = os.path.join(BASE_DIR, "engine", "seeksy_api.exe")
+else:
+    ENGINE_PATH = os.path.join(BASE_DIR, "engine", "seeksy_api")
 
 
 @app.route("/")
@@ -28,13 +38,13 @@ def analyze():
         head_position = int(data["headPosition"])
         requests_list = data["requests"]
 
-        # Prepare input for the C++ program.
+        # Prepare input for the C++ program
         input_data = (
             f"{disk_size} {head_position} {len(requests_list)} "
             + " ".join(map(str, requests_list))
         )
 
-        # Run the C++ scheduling engine.
+        # Run the C++ scheduling engine
         result = subprocess.run(
             [ENGINE_PATH],
             input=input_data,
@@ -46,10 +56,10 @@ def analyze():
         if result.returncode != 0:
             return jsonify({"error": result.stderr.strip()}), 400
 
-        # Convert C++ JSON output into Python data.
-        output = jsonify(__import__("json").loads(result.stdout))
+        # Convert C++ JSON output into Python data
+        output_data = json.loads(result.stdout)
 
-        return output
+        return jsonify(output_data)
 
     except (KeyError, TypeError, ValueError):
         return jsonify({"error": "Invalid input data."}), 400
@@ -62,4 +72,8 @@ def analyze():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(
+        host="0.0.0.0",
+        port=int(os.environ.get("PORT", 5000)),
+        debug=False
+    )
