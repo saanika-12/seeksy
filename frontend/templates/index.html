@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Seeksy | Adaptive Disk Scheduler</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+
+        <div class="logo">
+            <span class="logo-icon">S</span>
+            <span>seeksy</span>
+        </div>
+
+        <div class="nav-links">
+            <a href="#dashboard">Dashboard</a>
+            <a href="#scheduler">Scheduler</a>
+            <a href="#about">About</a>
+        </div>
+
+        <div class="status">
+            <span class="status-dot"></span>
+            Engine Ready
+        </div>
+
+    </nav>
+
+
+    <!-- Main Dashboard -->
+    <main id="dashboard">
+
+        <!-- Welcome Section -->
+        <section class="hero">
+
+            <div class="hero-content">
+
+                <p class="eyebrow">INTELLIGENT DISK MANAGEMENT</p>
+
+                <h1>
+                    Every seek has<br>
+                    <span>a smarter path.</span>
+                </h1>
+
+                <p class="hero-description">
+                    Explore disk scheduling through intelligent workload
+                    analysis, algorithm comparisons and real-time visualization.
+                </p>
+
+                <a href="#scheduler" class="primary-button">
+                    Explore Scheduler →
+                </a>
+
+            </div>
+
+            <div class="hero-decoration">
+                <div class="circle circle-one"></div>
+                <div class="circle circle-two"></div>
+                <div class="circle circle-three"></div>
+                <span class="decoration-text">SEEK / ANALYZE / OPTIMIZE</span>
+            </div>
+
+        </section>
+
+
+        <!-- Scheduler Section -->
+        <section id="scheduler" class="scheduler-section">
+
+            <div class="section-heading">
+
+                <p class="eyebrow">01 / CONFIGURATION</p>
+
+                <h2>Configure your disk</h2>
+
+                <p>
+                    Enter your disk parameters and let Seeksy analyse
+                    the workload.
+                </p>
+
+            </div>
+
+
+            <div class="input-card">
+
+                <div class="input-group">
+
+                    <label for="diskSize">Disk Size</label>
+
+                    <input
+                        type="number"
+                        id="diskSize"
+                        value="200"
+                        min="1"
+                    >
+
+                </div>
+
+
+                <div class="input-group">
+
+                    <label for="headPosition">Initial Head Position</label>
+
+                    <input
+                        type="number"
+                        id="headPosition"
+                        value="50"
+                        min="0"
+                    >
+
+                </div>
+
+
+                <div class="input-group full-width">
+
+                    <label for="requests">Track Requests</label>
+
+                    <input
+                        type="text"
+                        id="requests"
+                        value="82, 170, 43, 140, 24, 16, 190"
+                        placeholder="Example: 82, 170, 43, 140"
+                    >
+
+                    <small>Separate track numbers using commas.</small>
+
+                </div>
+
+
+                <button id="analyzeButton" class="primary-button">
+                    Analyse Workload →
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- Results Section -->
+        <section id="results" class="results-section">
+
+            <div class="section-heading">
+
+                <p class="eyebrow">02 / ANALYSIS</p>
+
+                <h2>Scheduling results</h2>
+
+                <p>Compare the performance of all six algorithms.</p>
+
+            </div>
+
+            <div id="resultsContainer" class="results-grid">
+
+                <div class="empty-state">
+                    <p>Your scheduling results will appear here.</p>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- Adaptive Recommendation -->
+         <section class="comparison-section">
+
+    <div class="section-heading">
+        <p class="eyebrow">03 / PERFORMANCE ANALYTICS</p>
+        <h2>Compare the performance.</h2>
+        <p>Visualise total head movement across all six scheduling algorithms.</p>
+    </div>
+
+    <div class="chart-card">
+        <canvas id="performanceChart"></canvas>
+    </div>
+
+</section>
+         <section class="visualization-section">
+    <div class="section-heading">
+        <p class="eyebrow">03 / VISUALIZATION</p>
+        <h2>Watch the head move.</h2>
+        <p>Explore how the disk head travels between requested tracks.</p>
+    </div>
+
+    <div class="visualization-card">
+        <div class="visualization-info">
+            <span>DISK HEAD POSITION</span>
+            <h3 id="currentHead">50</h3>
+        </div>
+
+        <div class="disk-track">
+            <div class="track-line"></div>
+            <div id="headMarker" class="head-marker"></div>
+        </div>
+
+        <div class="track-labels">
+            <span>Track 0</span>
+            <span id="targetTrack">Target: --</span>
+            <span id="maxTrack">Track 199</span>
+        </div>
+
+        <div class="input-group">
+    <label for="algorithmSelect">Choose Scheduling Algorithm</label>
+
+    <select id="algorithmSelect">
+        <option value="FCFS">FCFS</option>
+        <option value="SSTF">SSTF</option>
+        <option value="SCAN">SCAN</option>
+        <option value="C-SCAN">C-SCAN</option>
+        <option value="LOOK">LOOK</option>
+        <option value="C-LOOK">C-LOOK</option>
+    </select>
+</div>
+
+<button id="playAnimation" class="primary-button">
+    Play Head Movement →
+</button>
+    
+
+
+    </div>
+</section>
+        <section class="recommendation-section">
+
+            <p class="eyebrow">03 / ADAPTIVE INTELLIGENCE</p>
+
+            <h2>Seeksy recommendation</h2>
+
+            <div id="recommendation" class="recommendation-card">
+
+                <p>
+                    Run a workload analysis to discover
+                    the recommended scheduling algorithm.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- About Section -->
+        <section id="about" class="about-section">
+
+            <p class="eyebrow">04 / ABOUT SEEKSY</p>
+
+            <h2>Beyond traditional scheduling.</h2>
+
+            <p>
+                Seeksy is an adaptive disk scheduling simulator that
+                compares six traditional algorithms and uses
+                rule-based workload analysis to recommend an approach.
+            </p>
+
+        </section>
+
+    </main>
+
+
+    <!-- Footer -->
+    <footer>
+
+        <div class="logo">
+            <span class="logo-icon">S</span>
+            <span>seeksy</span>
+        </div>
+
+        <p>Intelligent Disk Scheduling Simulator · 2026</p>
+
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+</body>
+
+</html>
